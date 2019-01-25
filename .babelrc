@@ -5,6 +5,7 @@
       "import",
       {
         "libraryName": "antd",
+        "libraryDirectory": "lib", // es?
         "style": true
       }
     ]
