@@ -1,9 +1,16 @@
-import React from 'react'
-import { Button } from 'antd'
-import './App.css'
+import React, { useState } from 'react'
+import { Layout } from 'antd'
+import Sidebar from './components/Sidebar'
+import MainScreen from './components/MainScreen'
+import './App.scss'
 
-const App = () => {
-  return <Button>haha</Button>
+function App() {
+  return (
+    <Layout style={{}} className="App">
+      <Sidebar />
+      <MainScreen />
+    </Layout>
+  )
 }
 
 export default App
