@@ -1,8 +1,9 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Layout, Menu, Icon } from 'antd'
-import routes from '../routes'
-import { navigate } from '@reach/router'
+import ROUTES from '../routes'
+import { navigate, Router, Link } from '@reach/router'
 import './Sidebar.css'
+import logo from '../assets/logo.png'
 const { Sider } = Layout
 const SubMenu = Menu.SubMenu
 
@@ -11,19 +12,40 @@ function Sidebar() {
   const onCollapse = collapsed => setCollapsed(collapsed)
   return (
     <Sider collapsible collapsed={collapsed} onCollapse={onCollapse}>
-      <div className="h3 w3 br-pill bg-light-red ma2" />
-      <Menu theme="dark" defaultSelectedKeys={['1']}>
-        {renderRoutes(routes)}
-      </Menu>
+      <div className="h3 w3 ma3" key="logo">
+        <Link to="/">
+          <img src={logo} alt="logo" />
+        </Link>
+      </div>
+      <Router>
+        <SideMenu default />
+      </Router>
     </Sider>
   )
 }
 
 export default Sidebar
 
+function SideMenu({ uri, ...rest }) {
+  // 这里默认了侧栏最多只有两层结构，只找出了顶层的openKey
+  const defaultOpenKeys = ROUTES.filter(r => r.children)
+    .map(r => r.key)
+    .filter(key => uri.includes(key))
+  const defaultSelectedKeys = getFlatKeys(ROUTES).filter(key =>
+    uri.includes(key)
+  )
+  const config = { defaultOpenKeys, defaultSelectedKeys }
+  console.log(defaultSelectedKeys, defaultOpenKeys)
+  return (
+    <Menu default theme="dark" {...config}>
+      {renderRoutes(ROUTES)}
+    </Menu>
+  )
+}
+
 function renderRoutes(routes, parent = null) {
   return routes.map(({ key, title, icon, path, children }) => {
-    const fullPath = parent ? parent + path : path
+    const fullPath = key // 使用全path作为key
     if (children) {
       return (
         <SubMenu
@@ -48,4 +70,13 @@ function renderRoutes(routes, parent = null) {
       </Menu.Item>
     )
   })
+}
+
+function getFlatKeys(routes) {
+  let keys = []
+  routes.forEach(item => {
+    keys.push(item.key)
+    if (item.children) keys = [...keys, ...getFlatKeys(item.children)]
+  })
+  return keys
 }

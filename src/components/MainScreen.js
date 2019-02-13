@@ -1,5 +1,5 @@
 import React from 'react'
-import { Layout } from 'antd'
+import { Layout, Spin } from 'antd'
 import { Router } from '@reach/router'
 import ROUTES from '../routes'
 import NotFound from '../pages/404'
@@ -11,7 +11,7 @@ function MainScreen() {
     <Layout>
       <Header style={{ background: '#fff' }} />
       <Content className="pt3 ph2">
-        <Suspense fallback={null}>
+        <Suspense fallback={<Spin />}>
           <Router>
             {renderRoutes(ROUTES)}
             <NotFound default />
@@ -37,6 +37,6 @@ function renderRoutes(routes) {
         </Container>
       )
     }
-    return <Component key={key} path={path} />
+    return <Component key={key} path={path + '/*'} />
   })
 }

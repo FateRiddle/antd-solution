@@ -1,80 +1,63 @@
-import { message } from 'antd'
-import { v4 } from 'uuid'
-import { useState } from 'react'
+import axios from 'axios'
 
-const delay = ms => new Promise(_ => setTimeout(_, ms))
+//host
+const API_ROOT = '/api'
 
-const mock = async ({ mockData, successMsg, failureMsg }) => {
-  await delay(500)
-  if (Math.random() > 0.1) {
-    if (successMsg) message.success(successMsg)
-    return mockData
-  } else {
-    if (failureMsg) message.error(failureMsg)
-  }
+//setting up request
+const request = axios.create({
+  baseURL: API_ROOT,
+})
+//methods
+// const encode = encodeURIComponent
+const responseBody = res => res.data.recordset
+const responseOutput = res => res.data
+
+const ax = {
+  del: url => request.delete(url).then(responseOutput),
+  get: url => request.get(url).then(responseBody),
+  put: (url, body) => request.put(url, body).then(responseOutput), //put is for update
+  post: (url, body) => request.post(url, body).then(responseOutput), //post is for create
 }
 
-const mockData = [
+const Game = {
+  // all: () => ax.get('/users'),
+  // editName: ({ name, id }) => ax.put(`/users/${id}`, { name }),
+  all: () => fetchState(),
+  add: () => addState(),
+  edit: () => editState(),
+}
+
+export default {
+  request,
+  Game,
+}
+
+const fakedb = [
   {
-    key: '1',
-    name: 'John Brown',
-    age: 32,
-    address: 'New York No. 1 Lake Park',
+    id: '1',
+    name: 'Booking红包小卡片',
+    createdBy: '阿三',
+    type: '酒店',
   },
   {
-    key: '2',
-    name: 'Jim Green',
-    age: 42,
-    address: 'London No. 1 Lake Park',
+    id: '2',
+    name: '商家私域配置',
+    createdBy: '天天',
+    type: '国际机票',
   },
   {
-    key: '3',
-    name: 'Joe Black',
-    age: 32,
-    address: 'Sidney No. 1 Lake Park',
+    id: '3',
+    name: '机票自营活动',
+    createdBy: '小绿',
+    type: '度假',
   },
 ]
 
-function getData({ url = ``, isMock }) {
-  if (isMock) return mock
-  return fetch(url, {
-    method: 'GET', // *GET, POST, PUT, DELETE, etc.
-    mode: 'cors', // no-cors, cors, *same-origin
-    cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-    credentials: 'same-origin', // include, *same-origin, omit
-    redirect: 'follow', // manual, *follow, error
-    referrer: 'no-referrer',
-  }).then(response => response.json())
-}
+// mock
+const delay = ms => new Promise(resolve => setTimeout(resolve, ms))
 
-function postData({ url = ``, data = {}, isMock }) {
-  if (isMock) return mock
-  // Default options are marked with *
-  return fetch(url, {
-    method: 'POST', // *GET, POST, PUT, DELETE, etc.
-    mode: 'cors', // no-cors, cors, *same-origin
-    cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-    credentials: 'same-origin', // include, *same-origin, omit
-    headers: {
-      'Content-Type': 'application/json',
-      // "Content-Type": "application/x-www-form-urlencoded",
-    },
-    redirect: 'follow', // manual, *follow, error
-    referrer: 'no-referrer', // no-referrer, *client
-    body: JSON.stringify(data), // body data type must match "Content-Type" header
-  }).then(response => response.json()) // parses response to JSON
-}
+const returnRandom = () => (Math.random() > 0.2 ? true : false)
 
-const api = {
-  get: getData,
-  post: postData,
-}
-
-export const tableList = {
-  load: () =>
-    api.get({ url: 'www.taobao.com', isMock: true })({
-      mockData,
-      successMsg: '成功',
-      failureMsg: '报错',
-    }),
-}
+const fetchState = () => delay(500).then(() => fakedb)
+const addState = () => delay(500).then(returnRandom)
+const editState = () => delay(500).then(returnRandom)

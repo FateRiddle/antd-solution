@@ -2,9 +2,16 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import 'tachyons'
 import './index.scss'
+import { Provider } from 'react-redux'
 import App from './App'
-// import * as serviceWorker from './serviceWorker'
+import { configureStore } from './model'
 
-ReactDOM.render(<App />, document.getElementById('root'))
+function Root() {
+  return (
+    <Provider store={configureStore()}>
+      <App />
+    </Provider>
+  )
+}
 
-// serviceWorker.unregister()
+ReactDOM.render(<Root />, document.getElementById('root'))

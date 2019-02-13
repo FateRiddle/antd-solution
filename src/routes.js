@@ -1,47 +1,53 @@
 import { lazy } from 'react'
 const Page1 = lazy(() => import('pages/Page1'))
 const Page2 = lazy(() => import('pages/Page2'))
-const TableList = lazy(() => import('pages/TableList'))
-const TableList2 = lazy(() => import('pages/TableList2'))
-const TableList3 = lazy(() => import('pages/TableList3'))
+const Game = lazy(() => import('pages/Game'))
 
 const routes = [
   {
-    key: 1,
-    title: 'Option1',
+    title: '活动',
     icon: 'pie-chart',
-    path: '/option1',
-    Component: TableList,
+    path: '/game',
+    Component: Game,
   },
   {
-    key: 2,
     title: 'Option2',
     icon: 'desktop',
     path: '/option2',
-    Component: TableList3,
+    Component: Page1,
   },
   {
-    key: 3,
     title: 'User',
     icon: 'user',
     path: '/user',
     children: [
-      { key: 31, title: 'Tom', path: '/tom', Component: TableList2 },
-      { key: 32, title: 'Bill', path: '/bill', Component: Page2 },
-      { key: 33, title: 'Alex', path: '/alex', Component: Page2 },
+      { title: 'Tom', path: '/tom', Component: Page1 },
+      { title: 'Bill', path: '/bill', Component: Page2 },
+      { title: 'Alex', path: '/alex', Component: Page2 },
     ],
   },
   {
-    key: 4,
     title: 'Team',
     icon: 'team',
     path: '/team',
     children: [
-      { key: 41, title: 'Team 1', path: '/1', Component: Page2 },
-      { key: 42, title: 'Team 2', path: '/2', Component: Page2 },
+      { title: 'Team 1', path: '/1', Component: Page1 },
+      { title: 'Team 2', path: '/2', Component: Page2 },
     ],
   },
-  { key: 5, title: 'File', icon: 'file', path: '/file', Component: Page1 },
+  { title: 'File', icon: 'file', path: '/file', Component: Page1 },
 ]
 
-export default routes
+// 以每个模块对应的全path作为key，唯一。
+function addKeys(routes, parentPath) {
+  return routes.map(route => {
+    const fullPath = parentPath ? parentPath + route.path : route.path
+    if (route.children) {
+      const children = addKeys(route.children, route.path)
+      return { ...route, key: fullPath, children }
+    }
+    return { ...route, key: fullPath }
+  })
+}
+
+export default addKeys(routes)

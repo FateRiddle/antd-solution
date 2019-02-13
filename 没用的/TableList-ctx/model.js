@@ -49,10 +49,7 @@ export const TableList = types
     add(item) {
       self.items.push(item)
     },
-    load() {
-      self.items.
-      (mockData[0])
-    },
+    load() {},
   }))
 
 export const tableList = TableList.create({

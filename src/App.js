@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Layout } from 'antd'
 import Sidebar from './components/Sidebar'
 import MainScreen from './components/MainScreen'

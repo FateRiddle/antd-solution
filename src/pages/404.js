@@ -9,7 +9,7 @@ function NotFound() {
       className="bg-white flex flex-column items-center justify-center"
     >
       <div className="mb4">404 Not Found</div>
-      <Link to="/option1">
+      <Link to="/game">
         <Button type="primary">返回</Button>
       </Link>
     </div>
