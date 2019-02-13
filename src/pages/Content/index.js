@@ -76,7 +76,7 @@ function Content({ data, load, location, loading }) {
     <div style={{ padding: 24, background: '#fff', minHeight: 360 }}>
       <Router>
         <MainPage path="/" />
-        <GameForm path="form/:id" formData={formData} title={TITLE} />
+        <ContentForm path="form/:id" formData={formData} title={TITLE} />
         <NotFound default />
       </Router>
     </div>
@@ -98,7 +98,7 @@ export default connect(
   }
 )(Content)
 
-const GameForm = connect(
+const ContentForm = connect(
   null,
   {
     // 新增和修改表格
