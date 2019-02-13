@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { Layout, Menu, Icon } from 'antd'
 import ROUTES from '../routes'
 import { navigate, Router, Link } from '@reach/router'
@@ -34,10 +34,9 @@ function SideMenu({ uri, ...rest }) {
   const defaultSelectedKeys = getFlatKeys(ROUTES).filter(key =>
     uri.includes(key)
   )
-  const config = { defaultOpenKeys, defaultSelectedKeys }
-  console.log(defaultSelectedKeys, defaultOpenKeys)
+  const keyConfig = { defaultOpenKeys, defaultSelectedKeys }
   return (
-    <Menu default theme="dark" {...config}>
+    <Menu default theme="dark" {...keyConfig}>
       {renderRoutes(ROUTES)}
     </Menu>
   )
