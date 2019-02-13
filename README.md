@@ -1,44 +1,30 @@
-### antd-solution
+# antd-solution
 
-Simple, simple, simple.
+致力于使用 antd 写一套极简的后台管理系统模板。
 
-So new, shining stuffs have progressed so much when we crumbling in our daily job.
+## 技术栈
 
-Wake up, the world of frontend is so much different from a year ago. Or maybe even 6 months ago.
+1. router: @reach/router (react-router 的原作者新作，Gatsby.js 使用)
+2. 状态管理: 使用 dva-core + react-redux, 极简，独立，便于拥抱变化
+3. code splitting: Suspense api
 
-Doing stuff the new way:
+## 项目结构
 
-1. router: @reach/router (Gatsby.js is switching to it)
-2. data management: useReducers + new context api (currently planning: 1 for global states, 1 for each page)
-3. data passing: new context api + useContext
-4. code splitting at routes: suspense. Also with preload
-5. api fetching / async management: custom hooks
-6. css-grid. Cuz why not?
+service: api(接口),hooks(公用 hooks),utils(其他公用函数)
+components: 多处复用的组件
+layout: 后台系统的基本布局组件，侧栏，顶栏，主内容区等的组件
+pages: 每个页面的组件。主开发区
+model: 每个页面对应一个 model，状态管理
 
-Let's build something simple, clear, powerful!
+## 开发一个页面的基本流程
 
-# 1.27
+1. 拷贝基础表单 CRUD 模板，改名为新组件名
+2. 修改 routes，引入新组件
+3. 修改 组件 index.js 里的 SCHEMA 等常量、和状态管理
+4. 写新的 model
+5. 写新用到的接口 api
 
-service: api,hooks,util
-components: 一定是被多处复用的组件
-pages:
-
-1. 以每个页面为一个文件夹层叠摆放
-2. 使用 hooks 封装所有的信息，包括 api 块。
-
-# 2.12
-
-状态管理最终决定使用 `dva-core` + `react-redux`
-
-写了一个常用的 table CRUD 页面。用自定义 hook 和路由封装了表单状态的逻辑。要求规范是：
-
-1. 表单接受添加和修改两个方法 props，名称必须是 `add` 和 `edit`
-2. 表单所在路由必须是/form/:id(修改) 或者 /form/new(添加)
-   考虑过在外部处理统一传入一个 onSubmit，但代码反而有点冗余。
-
-需要解决的：antd 似乎还是整个包引入了，和解？
-
-# Get Started
+# 命令流
 
 分析包大小：
 

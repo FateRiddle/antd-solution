@@ -2,6 +2,7 @@ import { lazy } from 'react'
 const Page1 = lazy(() => import('pages/Page1'))
 const Page2 = lazy(() => import('pages/Page2'))
 const Game = lazy(() => import('pages/Game'))
+const Content = lazy(() => import('pages/Content'))
 
 const routes = [
   {
@@ -11,10 +12,10 @@ const routes = [
     Component: Game,
   },
   {
-    title: 'Option2',
+    title: '内容',
     icon: 'desktop',
-    path: '/option2',
-    Component: Page1,
+    path: '/content',
+    Component: Content,
   },
   {
     title: 'User',

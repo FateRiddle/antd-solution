@@ -1,7 +1,7 @@
 import React from 'react'
 import { Layout } from 'antd'
-import Sidebar from './components/Sidebar'
-import MainScreen from './components/MainScreen'
+import Sidebar from './layout/Sidebar'
+import MainScreen from './layout/MainScreen'
 import './App.scss'
 
 function App() {

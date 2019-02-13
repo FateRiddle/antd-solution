@@ -13,28 +13,40 @@ const SCHEMA = [
     key: 'id',
   },
   {
-    title: '活动名称',
+    title: '资源名称',
     key: 'name',
-    placeholder: '填入活动名称',
+    placeholder: '填入资源名称',
   },
   {
-    title: '活动类型',
+    title: '资源类型',
     key: 'type',
-    required: false,
-    placeholder: '例如“酒店”',
+    placeholder: '例如“领券”',
+  },
+  {
+    title: '玩法活动',
+    key: 'content',
+    placeholder: '必选',
   },
 ]
 
-const TITLE = '活动'
+const TITLE = '内容'
 
 const COLUMNS = [
   {
-    title: '活动ID',
+    title: 'id',
     dataIndex: 'id',
   },
   {
-    title: '活动名称',
+    title: '资源名称',
     dataIndex: 'name',
+  },
+  {
+    title: '资源类型',
+    dataIndex: 'type',
+  },
+  {
+    title: '玩法活动',
+    dataIndex: 'content',
   },
   {
     title: '创建人',
@@ -43,7 +55,7 @@ const COLUMNS = [
 ]
 
 // 此处开始无需变化  --------------------------------------
-function Games({ data, load, location, loading }) {
+function Content({ data, load, location, loading }) {
   // 生成和根据path时时变化formData，自定义hooks
   const formData = useForm(SCHEMA, data, location.pathname)
   // 首次加载
@@ -74,23 +86,23 @@ function Games({ data, load, location, loading }) {
 
 // 状态传递
 export default connect(
-  ({ games, loading }) => ({
+  ({ content, loading }) => ({
     // 表格数据
-    data: games,
+    data: content,
     // 是否在加载
-    loading: loading.models.games,
+    loading: loading.models.content,
   }),
   {
     // 加载表格数据
-    load: () => ({ type: 'games/fetch' }),
+    load: () => ({ type: 'content/fetch' }),
   }
-)(Games)
+)(Content)
 
 const GameForm = connect(
   null,
   {
     // 新增和修改表格
-    add: () => ({ type: 'games/add' }),
-    edit: () => ({ type: 'games/edit' }),
+    add: () => ({ type: 'content/add' }),
+    edit: () => ({ type: 'content/edit' }),
   }
 )(Form)

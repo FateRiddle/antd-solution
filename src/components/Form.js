@@ -2,19 +2,23 @@ import React from 'react'
 import { Form, Input, Button } from 'antd'
 const FormItem = Form.Item
 
-function GameForm({ formData = [], form, id, add, edit }) {
+function MyForm({ formData = [], title = '', form, id, add, edit }) {
+  const isNew = id === 'new'
   const goBack = () => window.history.back()
   const handleSubmit = e => {
     e.preventDefault()
     form.validateFields((err, values) => {
       if (err) return
       console.log('Received values of form: ', values)
-      const onSubmit = id === 'new' ? add : edit
+      const onSubmit = isNew ? add : edit
       Promise.resolve(onSubmit(values)).then(goBack)
     })
   }
   return (
     <div className="center" style={{ maxWidth: 800 }}>
+      <div className="f5 black mb2">
+        {isNew ? '新建' + title : '编辑' + title}
+      </div>
       <Form>
         {formData.map(d => (
           <FormItem
@@ -33,7 +37,7 @@ function GameForm({ formData = [], form, id, add, edit }) {
                       },
                     ]
                   : [],
-            })(<Input />)}
+            })(<Input placeholder={d.placeholder || ''} />)}
           </FormItem>
         ))}
       </Form>
@@ -49,4 +53,4 @@ function GameForm({ formData = [], form, id, add, edit }) {
   )
 }
 
-export default Form.create()(GameForm)
+export default Form.create()(MyForm)
