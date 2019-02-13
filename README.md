@@ -10,11 +10,11 @@
 
 ## 项目结构
 
-service: api(接口),hooks(公用 hooks),utils(其他公用函数)
-components: 多处复用的组件
-layout: 后台系统的基本布局组件，侧栏，顶栏，主内容区等的组件
-pages: 每个页面的组件。主开发区
-model: 每个页面对应一个 model，状态管理
+- service: api(接口),hooks(公用 hooks),utils(其他公用函数)
+- components: 多处复用的组件
+- layout: 后台系统的基本布局组件，侧栏，顶栏，主内容区等的组件
+- pages: 每个页面的组件。主开发区
+- model: 每个页面对应一个 model，状态管理
 
 ## 开发一个页面的基本流程
 
